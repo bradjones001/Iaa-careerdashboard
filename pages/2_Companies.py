@@ -10,7 +10,7 @@ n.subheader("New companies to watch")
 if nw.empty:
     n.write("No new companies yet")
 else:
-    n.dataframe(nw.groupby("Company").agg(Students=("UnityID", "nunique"), Entries=("Level", "size")))
+    n.dataframe(nw.iloc[::-1].groupby("Company", sort=False).agg(Students=("UnityID", "nunique"), Entries=("Level", "size")).head(5))
 a.subheader("Top 5 by acceptances")
 a.dataframe(d[d["Level"] == "Acceptance"]["Company"].value_counts().head(5))
 b.subheader("Top 5 by interviews")
