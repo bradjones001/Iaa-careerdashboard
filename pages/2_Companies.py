@@ -25,8 +25,8 @@ st.metric("Students interviewed", i["UnityID"].nunique())
 st.metric("Total interviews", len(i))
 v = i["Position"].value_counts().reset_index()
 v.columns = ["Position", "# of Interviews"]
-p, m = st.columns([2, 3])
-p.dataframe(v, hide_index=True, column_config={"Position": st.column_config.Column(width="large"), "# of Interviews": st.column_config.Column(width="medium")})
+p, m = st.columns([3, 2])
+p.table(v.set_index("Position"))
 s = pd.to_numeric(x[x["Level"] == "Acceptance"]["Final Salary"].str.replace(r"[^\d]", "", regex=True), errors="coerce")
 t = f"${s.mean():,.0f}" if s.notna().any() else "No Hires"
 m.markdown(f"<div style='text-align:center'>Average salary of accepted offers<div style='font-size:2.5rem'>{t}</div></div>", unsafe_allow_html=True)
