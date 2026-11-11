@@ -21,10 +21,12 @@ x = d[d["Company"] == c]
 if y != "All":
     x = x[x["Year"] == y]
 i = x[x["Level"] == "Interview"]
-st.metric("Students interviewed", i["UnityID"].nunique())
-st.metric("Total interviews", len(i))
+k = st.columns(3)
+k[0].metric("Students interviewed", i["UnityID"].nunique())
+k[1].metric("Total interviews", len(i))
+k[2].metric("Accepted positions", (x["Level"] == "Acceptance").sum())
 v = i["Position"].value_counts().reset_index()
-v.columns = ["Position", "# of Interviews"]
+v.columns = ["Position", "\\# of Interviews"]
 p, m = st.columns([3, 2])
 p.table(v.set_index("Position"))
 s = pd.to_numeric(x[x["Level"] == "Acceptance"]["Final Salary"].str.replace(r"[^\d]", "", regex=True), errors="coerce")
